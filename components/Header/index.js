@@ -1,41 +1,63 @@
 import * as React from "react";
 import {
-  AppBar,
-  Toolbar,
-  IconButton,
   Typography,
-  Menu,
-  MenuItem,
+  Stack,
+  Button,
+  Link,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-
-const pages = [
-  "Mecury",
-  "Venus",
-  "Earth",
-  "Mars",
-  "Jupiter",
-  "Saturn",
-  "Uranus",
-  "Neptune",
-];
+import Drawer from "../Drawer";
+import { StyledAppBar, StyledToolbar } from "./styled";
+import { PLANETS } from "../../utils/contants";
 
 const Header = () => {
+  const ref = React.useRef();
+  const [height, setHeight] = React.useState(0);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  React.useEffect(() => {
+    setHeight(ref.current.clientHeight);
+  }, [ref?.current?.clientHeight]);
+
+  const Menu = (
+    <Stack
+      direction="row"
+      justifyContent="center"
+      alignItems="center"
+      spacing={2}
+      sx={{ height: "64px" }}
+    >
+      {PLANETS.map((planet) => {
+        return (
+          <Button
+            component={Link}
+            key={planet.name}
+            sx={{
+              borderRadius: "0",
+              height: "100%",
+              "&:hover": {
+                borderTop: `2px solid ${planet.color}`,
+              },
+            }}
+          >
+            <Typography variant="h4" color="common.white">
+              {planet.name.toUpperCase()}
+            </Typography>
+          </Button>
+        );
+      })}
+    </Stack>
+  );
+
   return (
-    <AppBar position="static">
-      <Toolbar sx={{ justifyContent: "space-between" }}>
+    <StyledAppBar position="static" ref={ref}>
+      <StyledToolbar>
         <Typography variant="h5">THE PLANETS</Typography>
-        <Menu open>
-          {pages.map((page) => (
-            <MenuItem key={page}>
-              <Typography variant="h3" textAlign="center">
-                {page}
-              </Typography>
-            </MenuItem>
-          ))}
-        </Menu>
-      </Toolbar>
-    </AppBar>
+        {isMobile ? <Drawer planets={PLANETS} top={height} /> : Menu}
+      </StyledToolbar>
+    </StyledAppBar>
   );
 };
 export default Header;
