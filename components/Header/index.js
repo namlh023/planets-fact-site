@@ -1,9 +1,9 @@
 import * as React from "react";
+import Link from "next/link";
 import {
   Typography,
   Stack,
   Button,
-  Link,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -31,21 +31,22 @@ const Header = () => {
     >
       {PLANETS.map((planet) => {
         return (
-          <Button
-            component={Link}
-            key={planet.name}
-            sx={{
-              borderRadius: "0",
-              height: "100%",
-              "&:hover": {
-                borderTop: `2px solid ${planet.color}`,
-              },
-            }}
-          >
-            <Typography variant="h4" color="common.white">
-              {planet.name.toUpperCase()}
-            </Typography>
-          </Button>
+          <Link key={planet.name} href={planet.href} passHref>
+            <Button
+              component="a"
+              sx={{
+                borderRadius: "0",
+                height: "100%",
+                "&:hover": {
+                  borderTop: `2px solid ${planet.color}`,
+                },
+              }}
+            >
+              <Typography variant="h4" color="common.white">
+                {planet.name.toUpperCase()}
+              </Typography>
+            </Button>
+          </Link>
         );
       })}
     </Stack>
