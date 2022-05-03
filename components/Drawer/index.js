@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 import {
   IconButton,
   Drawer,
@@ -6,6 +7,7 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
+  Box,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CircleIcon from "@mui/icons-material/Circle";
@@ -27,6 +29,24 @@ export default function MyDrawer(props) {
     setOpen(open);
   };
 
+  const listItem = (planet) => (
+    <ListItem sx={{ padding: "16px" }} onClick={toggleDrawer(false)}>
+      <ListItemIcon>
+        <CircleIcon sx={{ color: planet.color }} />
+      </ListItemIcon>
+      <ListItemText
+        primaryTypographyProps={{
+          variant: "h6",
+          color: "common.white",
+        }}
+        primary={planet.name.toUpperCase()}
+      />
+      <ArrowForwardIosIcon
+        sx={{ color: "#fff", fontSize: "12px", opacity: 0.4 }}
+      />
+    </ListItem>
+  );
+
   return (
     <>
       <IconButton aria-label="menu" onClick={toggleDrawer(true)}>
@@ -45,24 +65,12 @@ export default function MyDrawer(props) {
         <StyledList>
           {props.planets.map((planet) => {
             return (
-              <>
-                <ListItem key={planet.name} sx={{ padding: "16px" }}>
-                  <ListItemIcon>
-                    <CircleIcon sx={{ color: planet.color }} />
-                  </ListItemIcon>
-                  <ListItemText
-                    primaryTypographyProps={{
-                      variant: "h6",
-                      color: "common.white",
-                    }}
-                    primary={planet.name.toUpperCase()}
-                  />
-                  <ArrowForwardIosIcon
-                    sx={{ color: "#fff", fontSize: "12px", opacity: 0.4 }}
-                  />
-                </ListItem>
+              <Box key={planet.name} sx={{ cursor: "pointer" }}>
+                <Link href={planet.href} passHref>
+                  {listItem(planet)}
+                </Link>
                 <Divider variant="middle" />
-              </>
+              </Box>
             );
           })}
         </StyledList>
