@@ -5,4 +5,13 @@ module.exports = {
   eslint: {
     dirs: ["pages", "utils", "components"],
   },
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/mercury",
+        permanent: true,
+      },
+    ];
+  },
 };

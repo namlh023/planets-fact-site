@@ -23,7 +23,6 @@ export const getStaticPaths = async () => {
 };
 
 export async function getStaticProps({ params }) {
-  console.log("params", params);
   return { props: params };
   // Fetch necessary data for the blog post using params.id
 }
