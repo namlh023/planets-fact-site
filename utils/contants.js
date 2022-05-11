@@ -1,8 +1,8 @@
 export const PLANETS = [
   {
-    name: "Mecury",
+    name: "Mercury",
     color: "#419EBB",
-    href: "mecury",
+    href: "mercury",
   },
   {
     name: "Venus",
