@@ -78,6 +78,13 @@ const theme = createTheme({
       lineHeight: "25px",
       letterSpacing: "0em",
     },
+    body2: {
+      fontFamily: "'League Spartan', sans-serif",
+      fontWeight: "400",
+      fontSize: "11px",
+      lineHeight: "22px",
+      letterSpacing: "0em",
+    },
   },
 });
 
