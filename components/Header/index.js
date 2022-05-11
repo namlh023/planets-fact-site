@@ -10,16 +10,13 @@ import {
 import Drawer from "../Drawer";
 import { StyledAppBar, StyledToolbar } from "./styled";
 import { PLANETS } from "../../utils/contants";
+import useHeight from "../../hooks/useHeight";
 
 const Header = () => {
-  const ref = React.useRef();
-  const [height, setHeight] = React.useState(0);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  React.useEffect(() => {
-    setHeight(ref.current.clientHeight);
-  }, [ref?.current?.clientHeight]);
+  const [component, heightOfComponent] = useHeight();
 
   const Menu = (
     <Stack
@@ -53,10 +50,10 @@ const Header = () => {
   );
 
   return (
-    <StyledAppBar position="static" ref={ref}>
+    <StyledAppBar position="static" ref={component}>
       <StyledToolbar>
         <Typography variant="h5">THE PLANETS</Typography>
-        {isMobile ? <Drawer planets={PLANETS} top={height} /> : Menu}
+        {isMobile ? <Drawer planets={PLANETS} top={heightOfComponent} /> : Menu}
       </StyledToolbar>
     </StyledAppBar>
   );
