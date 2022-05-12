@@ -1,6 +1,15 @@
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 768,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
   palette: {
     common: {
       black: "#070724",
@@ -25,6 +34,10 @@ const theme = createTheme({
       saturn: "#CD5120",
       uranus: "#1EC2A4",
       neptune: "#2D68F0",
+    },
+    stat: {
+      main: "#FFFFFF",
+      secondary: "rgba(255, 255, 255, 0.5)",
     },
   },
   typography: {
@@ -84,6 +97,22 @@ const theme = createTheme({
       fontSize: "11px",
       lineHeight: "22px",
       letterSpacing: "0em",
+    },
+    stat1: {
+      fontFamily: "'League Spartan', sans-serif",
+      fontWeight: "600",
+      fontSize: "12px",
+      lineHeight: "20px",
+      letterSpacing: "1px",
+      textTransform: "uppercase",
+    },
+    stat2: {
+      fontFamily: "'League Spartan', sans-serif",
+      fontWeight: "500",
+      fontSize: "20px",
+      lineHeight: "26px",
+      letterSpacing: "-0.75px",
+      textTransform: "uppercase",
     },
   },
 });
