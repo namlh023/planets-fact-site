@@ -1,49 +1,58 @@
+import { useState, useReducer } from "react";
 import { useAtom } from "jotai";
-import { Box, Grid, Stack, Typography, Link } from "@mui/material";
-import { StyledButtonGroup, StyledButton } from "./styled";
-import Image from "next/image";
+import { Grid, Container } from "@mui/material";
 import { planetAtom } from "../../store";
+import Stats from "./Stats";
+import Content from "./Content";
+import ImagePlanet from "./Image";
+import Buttons from "./Buttons";
 
 export default function Planet() {
+  // const tabs = ["overview", "structure", "surface"];
   const [planet] = useAtom(planetAtom);
+  const [tabActive, setTabActive] = useState(0);
+
+  const initialState = { ...planet.overview };
+  function reducer(state, action) {
+    switch (action.type) {
+      case 1:
+        return { ...planet.structure };
+      case 2:
+        return { ...planet.geology };
+      default:
+        return { ...planet.overview };
+    }
+  }
+
+  const [stateContent, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <Box>
-      <StyledButtonGroup variant="string" aria-label="button group" fullWidth>
-        <StyledButton>Overview</StyledButton>
-        <StyledButton>Structure</StyledButton>
-        <StyledButton>Surface</StyledButton>
-      </StyledButtonGroup>
-      <Grid container sx={{ margin: "32px 0" }}>
-        <Grid item sm={12} sx={{ width: "100%", margin: "50px" }}>
-          <Stack alignItems="center" justifyContent="center">
-            <Image
-              src={planet.images.planet}
-              alt={planet.name}
-              width={111}
-              height={111}
-            />
-          </Stack>
+    <Container>
+      <Buttons
+        name={planet.name}
+        tabActive={tabActive}
+        setTabActive={setTabActive}
+        dispatch={dispatch}
+      />
+      <Grid
+        container
+        rowSpacing={5}
+        sx={{
+          margin: "32px 0",
+          padding: "0 32px",
+          "& > *": { width: "100%" },
+        }}
+      >
+        <Grid item sm={12}>
+          <ImagePlanet image={planet.images.planet} name={planet.name} />
         </Grid>
-        <Grid item sm={12} sx={{ width: "100%", margin: "0 32px" }}>
-          <Stack alignItems="center" justifyContent="center" spacing={1}>
-            <Typography variant="h2" color="common.white">
-              {planet.name}
-            </Typography>
-            <Typography
-              variant="body2"
-              color="secondary"
-              sx={{ textAlign: "center" }}
-            >
-              {planet.overview.content}
-            </Typography>
-            <Typography color="secondary" sx={{ marginTop: "32px !important" }}>
-              Source : <Link href={planet.overview.source}>Wikipedia</Link>
-            </Typography>
-          </Stack>
+        <Grid item sm={12}>
+          <Content planetName={planet.name} stateContent={stateContent} />
         </Grid>
-        <Grid item sm={12}></Grid>
+        <Grid item sm={12}>
+          <Stats />
+        </Grid>
       </Grid>
-    </Box>
+    </Container>
   );
 }

@@ -66,7 +66,7 @@ export default function MyDrawer(props) {
           {props.planets.map((planet) => {
             return (
               <Box key={planet.name} sx={{ cursor: "pointer" }}>
-                <Link href={planet.href} passHref>
+                <Link href={`/${planet.href}`} passHref>
                   {listItem(planet)}
                 </Link>
                 <Divider variant="middle" />

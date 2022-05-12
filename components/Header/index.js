@@ -28,7 +28,7 @@ const Header = () => {
     >
       {PLANETS.map((planet) => {
         return (
-          <Link key={planet.name} href={planet.href} passHref>
+          <Link key={planet.name} href={`/${planet.href}`} passHref>
             <Button
               component="a"
               sx={{
