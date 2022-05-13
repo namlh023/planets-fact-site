@@ -24,3 +24,17 @@ export const StyledButton = styled(Button)`
     width: 75%;
   }
 `;
+
+export const StyledButton2 = styled(Button)`
+  color: #fff;
+  font-size: 9px;
+  line-height: 25px;
+  font-weight: 700;
+  font-family: "Spartan";
+  letter-spacing: 1.92857px;
+  text-transform: uppercase;
+  padding: 4px 4px 4px 24px;
+  justify-content: flex-start;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: 300px;
+`;
