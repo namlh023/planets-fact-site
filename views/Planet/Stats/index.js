@@ -11,6 +11,7 @@ export default function Stats() {
       spacing={2}
       direction={{ xs: "column", sm: "row" }}
       justifyContent="center"
+      sx={{ marginBottom: "32px", marginTop: { lg: "64px" } }}
     >
       <Stat name={"rotation"} value={planet.rotation} />
       <Stat name={"revolution"} value={planet.revolution} />

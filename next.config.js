@@ -5,6 +5,9 @@ module.exports = {
   eslint: {
     dirs: ["pages", "utils", "components"],
   },
+  images: {
+    imageSizes: [111, 189, 300, 400],
+  },
   async redirects() {
     return [
       {
