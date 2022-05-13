@@ -1,26 +1,28 @@
 import { useState, useReducer } from "react";
 import { useAtom } from "jotai";
-import { Grid, Container } from "@mui/material";
+import { Grid, Container, useTheme, useMediaQuery } from "@mui/material";
 import { planetAtom } from "../../store";
 import Stats from "./Stats";
 import Content from "./Content";
 import ImagePlanet from "./Image";
-import Buttons from "./Buttons";
+import Buttons, { Buttons2 } from "./Buttons";
 
 export default function Planet() {
-  // const tabs = ["overview", "structure", "surface"];
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [planet] = useAtom(planetAtom);
   const [tabActive, setTabActive] = useState(0);
 
-  const initialState = { ...planet.overview };
+  const initialState = { ...planet.overview, image: planet.images.planet };
   function reducer(state, action) {
     switch (action.type) {
       case 1:
-        return { ...planet.structure };
+        return { ...planet.structure, image: planet.images.internal };
       case 2:
-        return { ...planet.geology };
+        return { ...planet.geology, image: planet.images.geology };
       default:
-        return { ...planet.overview };
+        return { ...planet.overview, image: planet.images.planet };
     }
   }
 
@@ -28,12 +30,14 @@ export default function Planet() {
 
   return (
     <Container>
-      <Buttons
-        name={planet.name}
-        tabActive={tabActive}
-        setTabActive={setTabActive}
-        dispatch={dispatch}
-      />
+      {isMobile && (
+        <Buttons
+          name={planet.name}
+          tabActive={tabActive}
+          setTabActive={setTabActive}
+          dispatch={dispatch}
+        />
+      )}
       <Grid
         container
         rowSpacing={5}
@@ -44,15 +48,23 @@ export default function Planet() {
         }}
       >
         <Grid item sm={12}>
-          <ImagePlanet image={planet.images.planet} name={planet.name} />
+          <ImagePlanet image={stateContent.image} name={planet.name} />
         </Grid>
-        <Grid item sm={12}>
+        <Grid item sm={6}>
           <Content planetName={planet.name} stateContent={stateContent} />
         </Grid>
-        <Grid item sm={12}>
-          <Stats />
-        </Grid>
+        {!isMobile && (
+          <Grid item sm={5} sx={{ marginLeft: "48px", alignItems: "flex-end" }}>
+            <Buttons2
+              name={planet.name}
+              tabActive={tabActive}
+              setTabActive={setTabActive}
+              dispatch={dispatch}
+            />
+          </Grid>
+        )}
       </Grid>
+      <Stats />
     </Container>
   );
 }
